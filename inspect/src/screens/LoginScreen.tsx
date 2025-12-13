@@ -22,7 +22,7 @@ interface LoginScreenProps {
 const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
   const { theme } = useTheme();
   
-  const [email, setEmail] = useState<string>('');
+  const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -70,8 +70,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
   });
 
   const handleLogin = () => {
-    if (!email || !password) {
-      Alert.alert('Erro', 'Preencha o e-mail e a senha.');
+    if (!username || !password) {
+      Alert.alert('Erro', 'Preencha o usuário e a senha.');
       return;
     }
 
@@ -97,14 +97,14 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin }) => {
           <View style={styles.form}>
             <TextInput
               style={styles.input}
-              placeholder="E-mail"
+              placeholder="Usuário"
               placeholderTextColor={theme.colors.textSecondary}
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
+              value={username}
+              onChangeText={setUsername}
+              keyboardType="default"
               autoCapitalize="none"
               autoCorrect={false}
-              accessibilityLabel="E-mail"
+              accessibilityLabel="Usuário"
             />
             <TextInput
               style={styles.input}
