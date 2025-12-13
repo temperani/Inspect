@@ -10,7 +10,10 @@ import {
 } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider } from './src/components/ThemeProvider';
-import HomeScreen from './src/screens/HomeScreen';
+// HomeScreen removed; using an inline MainScreen
+import SolarButton from './src/components/SolarButton';
+import { View, Text } from 'react-native';
+import { useTheme } from './src/theme/themes';
 import LoginScreen from './src/screens/LoginScreen';
 import { ThemeMode } from './src/theme/types';
 
@@ -55,6 +58,17 @@ const App: React.FC = () => {
     setIsLoggedIn(false);
   };
 
+  const MainScreen: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
+    const { theme } = useTheme();
+    return (
+      <View style={{ flex: 1, backgroundColor: theme.colors.background, alignItems: 'center', justifyContent: 'center', padding: theme.spacing.lg }}>
+        <Text style={{ ...theme.typography.h1, color: theme.colors.textPrimary, marginBottom: theme.spacing.md }}>Bem-vindo</Text>
+        <Text style={{ ...theme.typography.body, color: theme.colors.textSecondary, marginBottom: theme.spacing.md }}>Tela principal (substitui HomeScreen)</Text>
+        <SolarButton title="Sair" onPress={onLogout} variant="danger" />
+      </View>
+    );
+  };
+
   return (
     <SafeAreaProvider>
       <ThemeProvider initialTheme={getInitialTheme()}>
@@ -64,7 +78,7 @@ const App: React.FC = () => {
           translucent
         />
         {!checkingLogin && (isLoggedIn ? (
-          <HomeScreen onLogout={handleLogout} />
+          <MainScreen onLogout={handleLogout} />
         ) : (
           <LoginScreen onLogin={() => setIsLoggedIn(true)} />
         ))}
