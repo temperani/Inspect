@@ -1,5 +1,6 @@
 // App.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { 
   StatusBar, 
   useColorScheme, 
@@ -24,6 +25,7 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
 const App: React.FC = () => {
   const colorScheme = useColorScheme();
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
+  const [checkingLogin, setCheckingLogin] = React.useState<boolean>(true);
   
   // Inicializar com tema automático, mas forçar escuro durante o dia
   const getInitialTheme = (): ThemeMode => {
@@ -34,6 +36,25 @@ const App: React.FC = () => {
     return isDaytime ? ThemeMode.DARK : ThemeMode.AUTO;
   };
   
+  useEffect(() => {
+    const checkToken = async () => {
+      try {
+        const token = await AsyncStorage.getItem('auth_token');
+        setIsLoggedIn(!!token);
+      } catch (e) {
+        setIsLoggedIn(false);
+      } finally {
+        setCheckingLogin(false);
+      }
+    };
+    checkToken();
+  }, []);
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('auth_token');
+    setIsLoggedIn(false);
+  };
+
   return (
     <SafeAreaProvider>
       <ThemeProvider initialTheme={getInitialTheme()}>
@@ -42,11 +63,11 @@ const App: React.FC = () => {
           backgroundColor="transparent"
           translucent
         />
-        {isLoggedIn ? (
-          <HomeScreen />
+        {!checkingLogin && (isLoggedIn ? (
+          <HomeScreen onLogout={handleLogout} />
         ) : (
           <LoginScreen onLogin={() => setIsLoggedIn(true)} />
-        )}
+        ))}
       </ThemeProvider>
     </SafeAreaProvider>
   );

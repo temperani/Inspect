@@ -1,5 +1,6 @@
 // src/components/SolarButton.tsx
 import React from 'react';
+import { ActivityIndicator } from 'react-native';
 import { 
   TouchableOpacity, 
   Text, 
@@ -21,6 +22,7 @@ interface SolarButtonProps {
   disabled?: boolean;
   fullWidth?: boolean;
   icon?: React.ReactNode;
+  loading?: boolean;
 }
 
 const SolarButton: React.FC<SolarButtonProps> = ({
@@ -32,6 +34,7 @@ const SolarButton: React.FC<SolarButtonProps> = ({
   disabled = false,
   fullWidth = false,
   icon,
+  loading = false,
 }) => {
   const { theme } = useTheme();
   
@@ -69,7 +72,7 @@ const SolarButton: React.FC<SolarButtonProps> = ({
       alignItems: 'center' as const,
       justifyContent: 'center' as const,
       flexDirection: 'row' as const,
-      opacity: disabled ? 0.6 : 1,
+      opacity: disabled || loading ? 0.6 : 1,
       width: fullWidth ? '100%' : 'auto',
     },
     text: {
@@ -84,6 +87,9 @@ const SolarButton: React.FC<SolarButtonProps> = ({
     iconContainer: {
       marginRight: icon ? theme.spacing.sm : 0,
     },
+    spinner: {
+      marginRight: theme.spacing.sm,
+    },
   });
   
   return (
@@ -95,7 +101,8 @@ const SolarButton: React.FC<SolarButtonProps> = ({
       accessibilityLabel={title}
       accessibilityRole="button"
     >
-      {icon && <View style={styles.iconContainer}>{icon}</View>}
+      {loading && <ActivityIndicator size="small" color={getTextColor()} style={styles.spinner} />}
+      {icon && !loading && <View style={styles.iconContainer}>{icon}</View>}
       <Text style={[styles.text, textStyle]}>{title}</Text>
     </TouchableOpacity>
   );

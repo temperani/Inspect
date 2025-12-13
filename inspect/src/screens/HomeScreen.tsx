@@ -13,7 +13,11 @@ import SolarButton from '../components/SolarButton';
 import SolarCard from '../components/SolarCard';
 import { ThemeMode } from '../theme/types';
 
-const HomeScreen: React.FC = () => {
+interface HomeScreenProps {
+  onLogout?: () => void;
+}
+
+const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout }) => {
   const { theme, isDarkMode, toggleTheme, setTheme } = useTheme();
   
   const [isHighContrast, setIsHighContrast] = useState<boolean>(true);
@@ -92,6 +96,11 @@ const HomeScreen: React.FC = () => {
           <Text style={styles.subtitle}>
             Interface otimizada para uso sob sol forte
           </Text>
+          {onLogout && (
+            <View style={{ marginTop: theme.spacing.sm }}>
+              <SolarButton title="Sair" onPress={() => onLogout()} variant="danger" />
+            </View>
+          )}
         </View>
         
         <View style={styles.content}>
