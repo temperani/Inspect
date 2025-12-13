@@ -1,7 +1,7 @@
 // src/components/ThemeProvider.tsx
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { useColorScheme, Appearance } from 'react-native';
-import { darkTheme, lightTheme, getTheme } from '../theme/themes';
+import { darkTheme, lightTheme } from '../theme/themes';
 import { ThemeContextType, ThemeMode } from '../theme/types';
 
 // Criar contexto com valor padrão

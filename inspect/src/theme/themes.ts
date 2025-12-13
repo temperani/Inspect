@@ -62,9 +62,7 @@ export const lightTheme: Theme = {
 };
 
 // Função para obter tema baseado no modo
-export const getTheme = (mode: 'light' | 'dark'): Theme => {
-  return mode === 'dark' ? darkTheme : lightTheme;
-};
+// getTheme removed since not referenced in the project (cleanup)
 
 // Hook personalizado para usar tema com TypeScript
 import { useContext } from 'react';
@@ -84,47 +82,4 @@ export const useTheme = (): ThemeContextType => {
 // Hook para estilos dinâmicos
 import { StyleSheet } from 'react-native';
 
-export const useSolarStyles = () => {
-  const { theme } = useTheme();
-  
-  const styles = StyleSheet.create({
-    solarContainer: {
-      flex: 1,
-      backgroundColor: theme.colors.background,
-      padding: theme.spacing.md,
-    },
-    solarText: {
-      color: theme.colors.textPrimary,
-      fontSize: theme.typography.h3.fontSize,
-      fontWeight: '600' as const,
-      textShadowColor: 'rgba(0, 0, 0, 0.75)',
-      textShadowOffset: { width: 1, height: 1 },
-      textShadowRadius: 2,
-    },
-    solarButton: {
-      backgroundColor: theme.colors.primary,
-      padding: theme.spacing.md,
-      borderRadius: theme.borderRadius.medium,
-      alignItems: 'center' as const,
-      justifyContent: 'center' as const,
-      borderWidth: 2,
-      borderColor: theme.colors.textPrimary,
-      minHeight: 56,
-    },
-    solarCard: {
-      backgroundColor: theme.colors.surface,
-      borderRadius: theme.borderRadius.large,
-      padding: theme.spacing.lg,
-      marginVertical: theme.spacing.sm,
-      borderWidth: 1,
-      borderColor: theme.colors.border,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.3,
-      shadowRadius: 8,
-      elevation: 8,
-    },
-  });
-  
-  return styles;
-};
+// useSolarStyles removed - no references remain in the project (cleanup)
