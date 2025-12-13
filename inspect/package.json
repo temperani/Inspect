@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "run:expo": "powershell -ExecutionPolicy Bypass -File ./scripts/run-expo.ps1"
   },
   "dependencies": {
     "expo": "~54.0.29",
